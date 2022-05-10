@@ -53,13 +53,17 @@ int main(void) {
             switch(i)
             {
                 case 0:
-                    printf("萬");break;
+                    printf("萬");
+                    break;
                 case 1:
-                    printf("仟");break;
+                    printf("仟");
+                    break;
                 case 2:
-                    printf("佰");break;
+                    printf("佰");
+                    break;
                 case 3:
-                    printf("十");break;                    
+                    printf("十");
+                    break;                    
             }
     }
     printf("元整");
