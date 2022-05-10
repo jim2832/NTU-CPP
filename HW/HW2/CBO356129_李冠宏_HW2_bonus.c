@@ -8,8 +8,7 @@ int main(void) {
     printf("請輸入金額：");
 	scanf("%d",&input);
 
-	if(input>99999 || input==0)
-	{
+	if(input>99999 || input==0){
 	    printf("數值範圍錯誤\n");
 	    return 0;
 	}
