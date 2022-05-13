@@ -14,7 +14,7 @@ int main(void) {
     printf("\n");
     memcpy(b, a, sizeof(int)*5);
 
-    printf("Before memory copy:\n");
+    printf("After memory copy:\n");
     for(int i=0; i<sizeof(b)/sizeof(b[0]); i++){
         printf("b[%d] = %d\n", i, b[i]);
     }
