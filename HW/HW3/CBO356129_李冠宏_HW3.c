@@ -7,7 +7,7 @@ int main(void){
     int sum;
     double avg;
     int total = 0;
-    double max_avg;
+    double max_avg = 0;
     int max_index;
 
     //calculate the scores, sums and averages of resspective students
