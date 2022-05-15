@@ -33,5 +33,5 @@ int main(void){
     printf("total: %d, avg: %.2f\n", total, avg);
 
     //print out the highest average score and its index
-    printf("highest avg: student %d: %.2f\n", max_index + 1, max_avg);
+    printf("highest avg: student %d: %.2f\n", max_index+1, max_avg);
 }
