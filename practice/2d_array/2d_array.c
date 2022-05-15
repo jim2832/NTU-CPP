@@ -17,7 +17,7 @@ int main(void){
     //print out the matrix
     for(int i=0; i<ROW; i++){
         for(int j=0; j<COLUMN; j++){
-            printf("%d\t",arr[i][j]);
+            printf("%2d\t",arr[i][j]);
         }
         printf("\n");
     }
