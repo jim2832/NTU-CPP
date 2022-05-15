@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define N 5
 
-int main(void) {
+int main(void){
     int sum = 0;
     int score[N];
     double avg;

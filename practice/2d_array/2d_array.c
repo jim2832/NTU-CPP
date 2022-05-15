@@ -2,8 +2,7 @@
 #define ROW 5
 #define COLUMN 6
 
-
-int main(void) {
+int main(void){
     int arr[ROW][COLUMN];
     int value = 0;
     
