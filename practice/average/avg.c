@@ -20,5 +20,14 @@ int main(void) {
     printf("sum score= %d\n", sum);
     printf("average score = %.2f\n", avg);
 
+    printf("\n");
+
+    printf("The following students are fail:\n");
+    for(int i=0; i<N; i++){
+        if(score[i] < 60){
+            printf("Student %d: %d\n",i ,score[i]);
+        }
+    }
+
     return 0;
 }
