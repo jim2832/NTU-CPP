@@ -34,4 +34,6 @@ int main(void){
 
     //print out the highest average score and its index
     printf("highest avg: student %d: %.2f\n", max_index+1, max_avg);
+
+    return 0;
 }
