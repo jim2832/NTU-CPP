@@ -15,5 +15,12 @@ int main(void){
         printf("*(P+%d)=%d, Addr=%p\n",i ,*(P+i), P+i);
     }
 
+    printf("\n");
+
+    for(int i=0; i<10; i++){
+        printf("%d\n", *P);
+        P++;
+    }
+
     return 0;
 }
