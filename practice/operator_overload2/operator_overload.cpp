@@ -6,7 +6,7 @@ class Point2D{
         //constructor
         Point2D();
 
-        //overload
+        //initialization
         Point2D(int x, int y);
 
         int getX();
@@ -28,6 +28,9 @@ class Point2D{
 
         Point2D operator+(Point2D &p); //重載+運算子
         Point2D operator-(Point2D &p); //重載-運算子
+        Point2D operator*(Point2D &p); //重載-運算子
+
+        Point2D operator+(int add); //overload
 
     private:
         int X;
@@ -68,6 +71,22 @@ Point2D Point2D::operator-(Point2D &p){ //第一個Point2D是回傳型態
     return temp;
 }
 
+//operator overload
+Point2D Point2D::operator*(Point2D &p){ //第一個Point2D是回傳型態
+    int x = X * p.X;
+    int y = Y * p.Y;
+    Point2D temp(x, y); //初始化
+    return temp;
+}
+
+//operator overload
+Point2D Point2D::operator+(int add){ //第一個Point2D是回傳型態
+    int x = X + add;
+    int y = Y + add;
+    Point2D temp(x, y);
+    return temp;
+}
+
 int main(void){
     Point2D p1(5, 5);
     Point2D p2(10, 10);
@@ -89,6 +108,12 @@ int main(void){
     cout << "p3(x, y) = (" << p3.getX() << "," << p3.getY() << ")" << endl;
 
     p3 = p2 - p1;
+    cout << "p3(x, y) = (" << p3.getX() << "," << p3.getY() << ")" << endl;
+
+    p3 = p1 * p2;
+    cout << "p3(x, y) = (" << p3.getX() << "," << p3.getY() << ")" << endl;
+
+    p3 = p1 + 200;
     cout << "p3(x, y) = (" << p3.getX() << "," << p3.getY() << ")" << endl;
 
     return 0;
