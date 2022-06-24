@@ -9,6 +9,7 @@ class Point2D{
         //initialization
         Point2D(int x, int y);
 
+        //method
         int getX();
 
         int getY();
