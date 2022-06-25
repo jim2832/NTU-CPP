@@ -7,15 +7,19 @@ class eCash{
     public:
         //constructor
         eCash(){
-            money = 0;
-            User_number = 0;
+            for(int i=0; i<100; i++){
+                ID[i] = NULL;
+                money = 0;
+            }
         }
 
         //destructor
         ~eCash(){}
 
         void login(){
-
+            string name;
+            cout << "eCash: 請輸入您的帳號: ";
+            cin >> name;
         }
 
         void logout(){
@@ -43,8 +47,8 @@ class eCash{
         }
 
     private:
-        int money;
         char ID[100];
+        int money;
 };
 
 int main(void){
@@ -57,6 +61,7 @@ int main(void){
     cout << "=== 歡迎使用eCash ===" << endl;
     wallet.login(); //login
     cout << endl;
+
     while(1){
         cout << wallet.getID() << "您好，請選擇項目:" << endl;
         cout << "s: 儲值" << endl;
