@@ -3,11 +3,6 @@
 #include <string.h>
 using namespace std;
 
-struct Data{
-    string name[100];
-    int RestMoney[100];
-};
-
 class eCash{
     public:
         //constructor
@@ -16,32 +11,11 @@ class eCash{
             User_number = 0;
         }
 
-        void login(){
-            struct Data Users;
-            int zero = 0;
-            cout << "eCash: 請輸入您的帳號: " << endl;
-            cin >> ID; //input
-            read = fopen("Users.txt", "r");
-            write = fopen("Users.txt", "w");
+        //destructor
+        ~eCash(){}
 
-            //search whether there is an existing user
-            for(int i=1; i<=User_number; i++){
-                fscanf(read, "%s\t%d\n", Users.name[i], &Users.RestMoney[i]);
-                //have searched an existing User
-                if(Users.name[i] == ID){
-                    cout << "eCash: 帳號開啟完成!" << endl;
-                    money = Users.RestMoney[i];
-                    break;
-                }
-                //not have searched an existing User
-                else{
-                    User_number++;
-                    cout << "eCash: 帳號不存在, 第一次使用!" << endl;
-                    fprintf(write, "%s\t%d\n", ID, zero);
-                }
-            }
-            fclose(read);
-            fclose(write);
+        void login(){
+
         }
 
         void logout(){
@@ -70,10 +44,7 @@ class eCash{
 
     private:
         int money;
-        string ID;
-        FILE *read;
-        FILE *write;
-        int User_number = 0;
+        char ID[100];
 };
 
 int main(void){
