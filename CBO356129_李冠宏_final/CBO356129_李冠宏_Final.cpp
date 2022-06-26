@@ -8,18 +8,50 @@ class eCash{
         //constructor
         eCash(){
             for(int i=0; i<100; i++){
-                ID[i] = NULL;
                 money = 0;
             }
+            User_number = 0;
         }
 
         //destructor
         ~eCash(){}
 
         void login(){
-            string name;
+            FILE *read;
+            FILE *write;
+            string read_ID;
+            int read_money;
+            int i = 0;
+
             cout << "eCash: 請輸入您的帳號: ";
-            cin >> name;
+            cin >> ID;
+
+            read = fopen("Users.txt", "r");
+            write = fopen("Users.txt", "w");
+
+            //first time
+            cout << "帳號不存在, 第一次使用!" << endl;
+            User_number++;
+            fprintf(write, "%s\t%d\n", ID, 0);
+
+            //while loop
+            while(i <= User_number){
+                fscanf(read, "%s\t%d\n", read_ID, &read_money);
+                if(ID == read_ID){
+                    cout << "帳號開啟完成!" << endl;
+                    money = read_money;
+                }
+                if(feof(read)){
+                    cout << "帳號不存在, 第一次使用!" << endl;
+                    User_number++;
+                    money = 0;
+                    fprintf(write, "%s\t%d\n", ID, 0);
+                }
+                i++;
+            }
+
+            fclose(read);
+            fclose(write);
         }
 
         void logout(){
@@ -47,8 +79,9 @@ class eCash{
         }
 
     private:
-        char ID[100];
+        string ID;
         int money;
+        int User_number;
 };
 
 int main(void){
