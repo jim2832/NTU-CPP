@@ -9,21 +9,45 @@ class eCash{
         eCash(){
             money = 0;
             ID = "No name";
+            read = fopen("Users.txt", "r");
+            write = fopen("Users.txt", "w");
         }
 
         //destructor
         ~eCash(){}
 
         void login(){
-            string input_ID;
+            char input_ID[100]; //使用者輸入的帳號
+            char read_ID[100]; //從Users.txt要讀入的帳號
+            int read_money; //從Users.txt要讀入的錢
 
             cout << "eCash: 請輸入您的帳號: ";
             cin >> input_ID;
-            if(input_ID == ID){
-                cout << "eCash: 帳號開啟完成!" << endl;
-            }
-            else{
-                cout << "帳號不存在, 第一次使用!" << endl;
+
+
+            while(!feof(read)){
+                fscanf(read, "%s\t%d\n", read_ID, &read_money);//讀檔
+                /*
+                如果讀到的帳號和輸入的一樣，就顯示帳號開啟完成
+                並且ID = read_ID; money = read_money
+                */
+                if(strcmp(input_ID, read_ID) == 0){
+                    cout << "eCash: 帳號開啟完成!" << endl;
+                    ID = read_ID;
+                    money = read_money;
+                    break;
+                }
+                /*
+                若都沒有讀到一樣的，就顯示帳號不存在，第一次使用
+                並且把input_ID和money = 0寫入Users.txt
+                */
+                else{
+                    cout << "帳號不存在, 第一次使用!" << endl;
+                    fprintf(write, "%s\t%d\n", input_ID, 0);
+                    ID = input_ID;
+                    money = 0;
+                    break;
+                }
             }
         }
 
@@ -60,18 +84,19 @@ class eCash{
             cout << "eCash: 您尚有" << money << "元" << endl;
         }
 
-        int GetMoney(){
-            return money;
-        }
-
         string getID(){
             return ID;
+        }
+
+        int GetMoney(){
+            return money;
         }
 
     private:
         string ID;
         int money;
-        FILE *file;
+        FILE *read;
+        FILE *write;
 };
 
 int main(void){
@@ -115,6 +140,8 @@ int main(void){
 
         //case q
         case 'q':
+            ecash.logout();
+            cout << "帳號登出, 已存擋!" << endl;
             cout << "謝謝,ByeBye!" << endl;
             return 0;
             break;
@@ -123,6 +150,11 @@ int main(void){
             cout << "請輸入有效的指令！" << endl;
             break;
         }
+        //存擋
+        FILE *write;
+        write = fopen("Users.txt", "w");
+
+
         cout << "請按Enter鍵繼續...";
         getchar();
         fgetc(stdin);
