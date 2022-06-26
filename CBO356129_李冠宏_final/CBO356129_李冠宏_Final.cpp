@@ -8,10 +8,7 @@ class eCash{
         //constructor
         eCash(){
             money = 0;
-            file = fopen("Users.txt", "r");
-            fscanf(file, "%d", &money);
-            fclose(file);
-            ID = 123;
+            ID = "No name";
         }
 
         //destructor
@@ -20,10 +17,13 @@ class eCash{
         void login(){
             string input_ID;
 
-            cout << "eCash: 請輸入您的帳號: " << endl;
+            cout << "eCash: 請輸入您的帳號: ";
             cin >> input_ID;
             if(input_ID == ID){
                 cout << "eCash: 帳號開啟完成!" << endl;
+            }
+            else{
+                cout << "帳號不存在, 第一次使用!" << endl;
             }
         }
 
@@ -32,11 +32,13 @@ class eCash{
         }
 
         void store(int m){
-            file = fopen("test1.txt", "w+");
-            fscanf(file, "%d", &money);
+            if(m < 0){
+                cout << "請輸入大於0的金額" << endl;
+                m = 0;
+                return;
+            }
             money += m;
-            fprintf(file,"%d", money);
-            fclose(file);
+            cout << "eCash: 您存了" << m << "元" << endl;
         }
 
         void pay(int m){
@@ -46,11 +48,7 @@ class eCash{
                 return;
             }
             if(money - m >= 0){
-                file = fopen("Users.txt", "w");
-                fscanf(file, "%d", &money);
                 money -= m;
-                fprintf(file, "%d", money);
-                fclose(file);
             }
             else{
                 cout << "eCash: 您的錢不夠" << endl;
@@ -59,10 +57,7 @@ class eCash{
         }
 
         void display(){
-            file = fopen("Users.txt", "r");
-            fscanf(file, "%d", &money);
             cout << "eCash: 您尚有" << money << "元" << endl;
-            fclose(file);
         }
 
         int GetMoney(){
@@ -103,13 +98,7 @@ int main(void){
         case 's':
             cout << "請輸入儲存金額:" << endl;
             cin >> m;
-            if(m < 0){
-                cout << "請輸入大於0的金額" << endl;
-                m = 0;
-                break;
-            }
             ecash.store(m);
-            cout << "eCash: 您存了" << m << "元" << endl;
             break;
 
         //case p
