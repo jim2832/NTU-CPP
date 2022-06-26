@@ -7,51 +7,24 @@ class eCash{
     public:
         //constructor
         eCash(){
-            for(int i=0; i<100; i++){
-                money = 0;
-            }
-            User_number = 0;
+            money = 0;
+            file = fopen("Users.txt", "r");
+            fscanf(file, "%d", &money);
+            fclose(file);
+            ID = 123;
         }
 
         //destructor
         ~eCash(){}
 
         void login(){
-            FILE *read;
-            FILE *write;
-            string read_ID;
-            int read_money;
-            int i = 0;
+            string input_ID;
 
-            cout << "eCash: 請輸入您的帳號: ";
-            cin >> ID;
-
-            read = fopen("Users.txt", "r");
-            write = fopen("Users.txt", "w");
-
-            //first time
-            cout << "帳號不存在, 第一次使用!" << endl;
-            User_number++;
-            fprintf(write, "%s\t%d\n", ID, 0);
-
-            //while loop
-            while(i <= User_number){
-                fscanf(read, "%s\t%d\n", read_ID, &read_money);
-                if(ID == read_ID){
-                    cout << "帳號開啟完成!" << endl;
-                    money = read_money;
-                }
-                if(feof(read)){
-                    cout << "帳號不存在, 第一次使用!" << endl;
-                    User_number++;
-                    money = 0;
-                    fprintf(write, "%s\t%d\n", ID, 0);
-                }
-                i++;
+            cout << "eCash: 請輸入您的帳號: " << endl;
+            cin >> input_ID;
+            if(input_ID == ID){
+                cout << "eCash: 帳號開啟完成!" << endl;
             }
-
-            fclose(read);
-            fclose(write);
         }
 
         void logout(){
@@ -59,15 +32,37 @@ class eCash{
         }
 
         void store(int m){
+            file = fopen("test1.txt", "w+");
+            fscanf(file, "%d", &money);
             money += m;
+            fprintf(file,"%d", money);
+            fclose(file);
         }
 
         void pay(int m){
-            money -= m;
+            if(m < 0){
+                cout << "eCash: 請輸入大於0的金額" << endl;
+                m = 0;
+                return;
+            }
+            if(money - m >= 0){
+                file = fopen("Users.txt", "w");
+                fscanf(file, "%d", &money);
+                money -= m;
+                fprintf(file, "%d", money);
+                fclose(file);
+            }
+            else{
+                cout << "eCash: 您的錢不夠" << endl;
+                return;
+            }
         }
 
         void display(){
+            file = fopen("Users.txt", "r");
+            fscanf(file, "%d", &money);
             cout << "eCash: 您尚有" << money << "元" << endl;
+            fclose(file);
         }
 
         int GetMoney(){
@@ -81,22 +76,20 @@ class eCash{
     private:
         string ID;
         int money;
-        int User_number;
+        FILE *file;
 };
 
 int main(void){
     char input;
-    int m;
-    eCash wallet; //make object
-    FILE *read;
-    FILE *write;
+    int m = 0;
+    eCash ecash; //make object
 
     cout << "=== 歡迎使用eCash ===" << endl;
-    wallet.login(); //login
+    ecash.login(); //login
     cout << endl;
 
     while(1){
-        cout << wallet.getID() << "您好，請選擇項目:" << endl;
+        cout << ecash.getID() << "您好，請選擇項目:" << endl;
         cout << "s: 儲值" << endl;
         cout << "p: 消費" << endl;
         cout << "d: 顯示餘額" << endl;
@@ -108,7 +101,6 @@ int main(void){
 
         //case s
         case 's':
-
             cout << "請輸入儲存金額:" << endl;
             cin >> m;
             if(m < 0){
@@ -116,7 +108,7 @@ int main(void){
                 m = 0;
                 break;
             }
-            wallet.store(m);
+            ecash.store(m);
             cout << "eCash: 您存了" << m << "元" << endl;
             break;
 
@@ -124,22 +116,12 @@ int main(void){
         case 'p':
             cout << "請輸入消費金額:" << endl;
             cin >> m;
-            if(m < 0){
-                cout << "eCash: 請輸入大於0的金額" << endl;
-                m = 0;
-                break;
-            }
-            if(wallet.GetMoney() -m < 0){
-                cout << "eCash: 您的錢不夠" << endl;
-                break;
-            }
-            wallet.pay(m);
-            cout << "eCash: 您花了" << m << "元" << endl;
+            ecash.pay(m);
             break;
 
         //case d
         case 'd':
-            wallet.display();
+            ecash.display();
             break;
 
         //case q
