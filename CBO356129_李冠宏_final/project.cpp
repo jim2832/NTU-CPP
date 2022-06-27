@@ -22,7 +22,7 @@ class Accounting{
                 << "|-----------------------------------------------|" << endl
                 << "| 3:列出所有記帳       | 4:今年的記帳分析\t|" << endl
                 << "|-----------------------------------------------|" << endl
-                << "| 5:查詢某一天的記帳   | 6:查詢某一個月的記帳\t|" << endl
+                << "| 5:查詢某一個月的記帳 | 6:查詢某一天的記帳\t|" << endl
                 << "|-----------------------------------------------|" << endl
                 << "|\t\t輸入q即可退出程式\t\t|" << endl
                 << "|-----------------------------------------------|" << endl;
@@ -51,7 +51,7 @@ class Accounting{
                 << "|-----------------------------------------------|" << endl
                 << "|    1:早餐    |    2:中餐    |    3:晚餐\t|" << endl
                 << "|-----------------------------------------------|" << endl
-                << "|    4:飲料    |    5:交通    |   6:日常用品    |" << endl
+                << "|    4:飲料    |    5:交通    |    6:生活\t|" << endl
                 << "|-----------------------------------------------|" << endl
                 << "|    7:娛樂    |    8:教育    |    9:其他\t|" << endl
                 << "|-----------------------------------------------|" << endl;
@@ -62,39 +62,51 @@ class Accounting{
             cout << "請問花了多少錢呢？ ";
         }
 
-        /*
-        //設定某一天的類別
-        void set_catagory(int &mon, int &da, int &cnt, int cat){
-            catagory[mon][da][cnt] = cat;
+        void date_input1(int &mon, int &da){
+            cout << "幾月: ";
+            cin >> mon;
+            if(mon < 1 || mon > 12){
+                cout << "請輸入有效月份！" << endl;
+                cout << endl;
+                return;
+            }
+
+            cout << "幾號: ";
+            cin >> da;
+            //有31天的月份
+            if(mon == 1 || mon ==3 || mon == 5 || mon == 7 || mon == 8 || mon == 10 || mon == 12){
+                if(da < 1 || da > 31){
+                    cout << "請輸入有效日期！" << endl;
+                    cout << endl;
+                    return;
+                }
+            }
+            //有30天的月份
+            if(mon == 4 || mon ==6 || mon == 9 || mon == 11){
+                if(da < 1 || da > 30){
+                    cout << "請輸入有效日期！" << endl;
+                    cout << endl;
+                    return;
+                }
+            }
+            //2月只有28天
+            if(mon == 2){
+                if(da < 1 || da > 28){
+                    cout << "請輸入有效日期！" << endl;
+                    cout << endl;
+                    return;
+                }
+            }
         }
 
-        //設定某一天的價錢
-        void set_price(int &mon, int &da, int &cnt, int &pri){
-            price[mon][da][cnt] = pri;
+        void date_input2(int &mon){
+            cin >> mon;
+            if(mon < 1 || mon > 12){
+                cout << "請輸入有效月份！" << endl;
+                cout << endl;
+                return;
+            }
         }
-
-        int get_catagory(int &mon, int &da, int &cnt){
-            return catagory[mon][da][cnt];
-        }
-
-        int get_price(int &mon, int &da, int &cnt){
-            return price[mon][da][cnt];
-        }
-
-        void show(int &mon, int &da){
-            cout << mon << "月" << da << "日" << endl;
-        }
-
-        //某一天的記帳數量增加
-        void count_increment(int &mon, int &da){
-            count[mon][da]++;
-        }
-
-        //取得某一天的記帳數量
-        int get_count(int &mon, int &da){
-            return count[mon][da];
-        }
-        */
 };
 
 
@@ -119,6 +131,9 @@ int main(void){
 
     while(1){
         int m, d, c, p; //month, day, count, price
+        int month_sum = 0; //當月總花費
+        int day_sum = 0; //當日總花費
+
         account.start();
         cout << "請輸入要使用的功能: ";
         cin >> input;
@@ -163,7 +178,7 @@ int main(void){
                 }
                 //2月只有28天
                 if(m == 2){
-                    if(d < 1 || d> 28){
+                    if(d < 1 || d > 28){
                         cout << "請輸入有效日期！" << endl;
                         cout << endl;
                         break;
@@ -249,7 +264,7 @@ int main(void){
                         count[m][d]++; //m月d日的記帳數量增加
                         c = count[m][d];
 
-                        catagory[m][d][c] = "日常用品";
+                        catagory[m][d][c] = "生活";
                         price[m][d][c] = p; //m月d日的第c筆資料為p元
                         cout << "記帳成功！" << endl;
                         cout << endl;
@@ -305,7 +320,8 @@ int main(void){
                 //列出所有的記帳
                 cout << "2022年的記帳紀錄:" << endl;
                 cout << endl;
-                cout << " 日期\t\t類別\t\t花費" << endl;
+                cout << " 日期\t\t類別\t\t花費" << endl
+                    << "------------------------------------" << endl;
                 for(int i=0; i<12; i++){
                     for(int j=0; j<31; j++){
                         for(int k=0; k<50; k++){
@@ -316,6 +332,7 @@ int main(void){
                         }
                     }
                 }
+                cout << "------------------------------------" << endl;
                 cout << endl;
                 break;
 
@@ -323,12 +340,89 @@ int main(void){
             case '4':
                 break;
 
-            //查詢某一天的記帳
-            case '5':
-                break;
-
             //查詢某一個月的記帳
+            case '5':
+                cout << "請問要查詢幾月呢？(輸入月份數字) ";
+                cin >> m;
+                if(m < 1 || m > 12){
+                    cout << "請輸入有效月份！" << endl;
+                    cout << endl;
+                    break;
+                }
+                cout << endl;
+                cout << "2022年" << m << "月" << "的記帳紀錄為:" << endl;
+                cout << endl;
+                cout << " 日期\t\t類別\t\t花費" << endl
+                    << "------------------------------------" << endl;
+                for(int i=0; i<31; i++){
+                    for(int j=0; j<50; j++){
+                        if(price[m][i][j] != 0){
+                            cout << m << "月" << i << "日" << "\t\t"
+                            << catagory[m][i][j] << "\t\t" << price[m][i][j] << endl;
+                            month_sum += price[m][i][j];
+                        }
+                    }
+                }
+                cout << "------------------------------------" << endl;
+                cout << m << "月總共花了" << month_sum << "元" << endl;
+                cout << endl;
+                break;
+                
+
+            //查詢某一天的記帳
             case '6':
+                cout << "請問要查詢哪一天呢？" << endl;
+
+                cout << "幾月: ";
+                cin >> m;
+                if(m < 1 || m > 12){
+                    cout << "請輸入有效月份！" << endl;
+                    cout << endl;
+                    break;
+                }
+
+                cout << "幾號: ";
+                cin >> d;
+                //有31天的月份
+                if(m == 1 || m ==3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12){
+                    if(d < 1 || d > 31){
+                        cout << "請輸入有效日期！" << endl;
+                        cout << endl;
+                        break;
+                    }
+                }
+                //有30天的月份
+                if(m == 4 || m ==6 || m == 9 || m == 11){
+                    if(d < 1 || d > 30){
+                        cout << "請輸入有效日期！" << endl;
+                        cout << endl;
+                        break;
+                    }
+                }
+                //2月只有28天
+                if(m == 2){
+                    if(d < 1 || d > 28){
+                        cout << "請輸入有效日期！" << endl;
+                        cout << endl;
+                        break;
+                    }
+                }
+
+                cout << endl;
+                cout << "2022年" << m << "月" <<  d << "日" << "的記帳紀錄為:" << endl;
+                cout << endl;
+                cout << " 日期\t\t類別\t\t花費" << endl
+                    << "------------------------------------" << endl;
+                for(int i=0; i<50; i++){
+                    if(price[m][d][i] != 0){
+                        cout << m << "月" << d << "日" << "\t\t"
+                            << catagory[m][d][i] << "\t\t" << price[m][d][i] << endl;
+                        day_sum += price[m][d][i];
+                    }
+                }
+                cout << "------------------------------------" << endl;
+                cout << m << "月" << d << "日總共花了" << day_sum << "元" << endl; 
+                cout << endl;
                 break;
 
             //退出
