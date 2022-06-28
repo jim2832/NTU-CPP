@@ -61,52 +61,6 @@ class Accounting{
         void ask_price(){
             cout << "請問花了多少錢呢？ ";
         }
-
-        void date_input1(int &mon, int &da){
-            cout << "幾月: ";
-            cin >> mon;
-            if(mon < 1 || mon > 12){
-                cout << "請輸入有效月份！" << endl;
-                cout << endl;
-                return;
-            }
-
-            cout << "幾號: ";
-            cin >> da;
-            //有31天的月份
-            if(mon == 1 || mon ==3 || mon == 5 || mon == 7 || mon == 8 || mon == 10 || mon == 12){
-                if(da < 1 || da > 31){
-                    cout << "請輸入有效日期！" << endl;
-                    cout << endl;
-                    return;
-                }
-            }
-            //有30天的月份
-            if(mon == 4 || mon ==6 || mon == 9 || mon == 11){
-                if(da < 1 || da > 30){
-                    cout << "請輸入有效日期！" << endl;
-                    cout << endl;
-                    return;
-                }
-            }
-            //2月只有28天
-            if(mon == 2){
-                if(da < 1 || da > 28){
-                    cout << "請輸入有效日期！" << endl;
-                    cout << endl;
-                    return;
-                }
-            }
-        }
-
-        void date_input2(int &mon){
-            cin >> mon;
-            if(mon < 1 || mon > 12){
-                cout << "請輸入有效月份！" << endl;
-                cout << endl;
-                return;
-            }
-        }
 };
 
 
@@ -115,9 +69,9 @@ int main(void){
     char input, c_input;
     Accounting account;
     int zero = 0;
-    string catagory[12][31][50];
-    int price[12][31][50];
-    int count[12][31];
+    string catagory[13][32][50];
+    int price[13][32][50];
+    int count[13][32];
 
     //初始化
     for(int i=0; i<12; i++){
@@ -133,6 +87,11 @@ int main(void){
         int m, d, c, p; //month, day, count, price
         int month_sum = 0; //當月總花費
         int day_sum = 0; //當日總花費
+        int total; //總花費
+        int sum1, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9; //各類總和
+        double percent1 = 0, percent2 = 0, percent3 = 0,
+                percent4 = 0, percent5 = 0, percent6 = 0,
+                percent7 = 0, percent8 = 0, percent9 = 0; //各類佔比
 
         account.start();
         cout << "請輸入要使用的功能: ";
@@ -322,12 +281,18 @@ int main(void){
                 cout << endl;
                 cout << " 日期\t\t類別\t\t花費" << endl
                     << "------------------------------------" << endl;
-                for(int i=0; i<12; i++){
-                    for(int j=0; j<31; j++){
-                        for(int k=0; k<50; k++){
+                for(int i=1; i<=12; i++){
+                    for(int j=1; j<=31; j++){
+                        for(int k=1; k<=50; k++){
                             if(price[i][j][k] != 0){
-                                cout << i << "月" << j << "日" << "\t\t"
-                                << catagory[i][j][k] << "\t\t" << price[i][j][k] << endl;
+                                if(i>9){
+                                    cout << i << "月" << j << "日" << "\t"
+                                    << catagory[i][j][k] << "\t\t" << price[i][j][k] << endl;
+                                }
+                                else{
+                                    cout << i << "月" << j << "日" << "\t\t"
+                                    << catagory[i][j][k] << "\t\t" << price[i][j][k] << endl;
+                                }
                             }
                         }
                     }
@@ -338,6 +303,78 @@ int main(void){
 
             //今年的記帳分析
             case '4':
+                cout << "2022年的記帳分析" << endl;
+                cout << "↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓" << endl;
+                cout << endl;
+
+                //每月花費
+                cout << "每月花費:" << endl;
+                cout << endl;
+                cout << "月份" << "\t" << "花費" << endl
+                    << "---------------" << endl;
+                for(int i=1; i<=12; i++){
+                    month_sum = 0;
+                    for(int j=1; j<=31; j++){
+                        for(int k=0; k<50; k++){
+                            month_sum += price[i][j][k];
+                            total += price[i][j][k];
+                        }
+                    }
+                    cout << i << "月" << "\t" << month_sum << endl;
+                }
+                cout << "---------------" << endl;
+                cout << "->總花費:" << total << endl;
+                cout << endl;
+
+                //每類型佔比
+                for(int i=1; i<=12; i++){
+                    for(int j=1; j<=31; j++){
+                        for(int k=0; k<50; k++){
+                            if(catagory[i][j][k] == "早餐"){
+                                sum1 += price[i][j][k];
+                            }
+                            if(catagory[i][j][k] == "中餐"){
+                                sum2 += price[i][j][k];
+                            }
+                            if(catagory[i][j][k] == "晚餐"){
+                                sum3 += price[i][j][k];
+                            }
+                            if(catagory[i][j][k] == "飲料"){
+                                sum4 += price[i][j][k];
+                            }
+                            if(catagory[i][j][k] == "交通"){
+                                sum5 += price[i][j][k];
+                            }
+                            if(catagory[i][j][k] == "生活"){
+                                sum6 += price[i][j][k];
+                            }
+                            if(catagory[i][j][k] == "娛樂"){
+                                sum7 += price[i][j][k];
+                            }
+                            if(catagory[i][j][k] == "教育"){
+                                sum8 += price[i][j][k];
+                            }
+                            if(catagory[i][j][k] == "其他"){
+                                sum9 += price[i][j][k];
+                            }
+                        }
+                    }
+                }
+                percent1 = (double)sum1 / total *100;
+                percent2 = (double)sum2 / total *100;
+                percent3 = (double)sum3 / total *100;
+                percent4 = (double)sum4 / total *100;
+                percent5 = (double)sum5 / total *100;
+                percent6 = (double)sum6 / total *100;
+                percent7 = (double)sum7 / total *100;
+                percent8 = (double)sum8 / total *100;
+                percent9 = (double)sum9 / total *100;
+                cout << "各類型消費佔的比例" << endl;
+                printf("早餐: %d%%\t 中餐: %d%%\t 晚餐: %d%%\n", (int)percent1, (int)percent2, (int)percent3);
+                printf("飲料: %d%%\t 交通: %d%%\t 生活: %d%%\n", (int)percent4, (int)percent5, (int)percent6);
+                printf("娛樂: %d%%\t 教育: %d%%\t 其他: %d%%\n", (int)percent7, (int)percent8, (int)percent9);
+                cout << endl;
+
                 break;
 
             //查詢某一個月的記帳
@@ -354,17 +391,24 @@ int main(void){
                 cout << endl;
                 cout << " 日期\t\t類別\t\t花費" << endl
                     << "------------------------------------" << endl;
-                for(int i=0; i<31; i++){
-                    for(int j=0; j<50; j++){
+                for(int i=1; i<=31; i++){
+                    for(int j=1; j<=50; j++){
                         if(price[m][i][j] != 0){
-                            cout << m << "月" << i << "日" << "\t\t"
-                            << catagory[m][i][j] << "\t\t" << price[m][i][j] << endl;
-                            month_sum += price[m][i][j];
+                            if(m>9){
+                                cout << m << "月" << i << "日" << "\t"
+                                << catagory[m][i][j] << "\t\t" << price[m][i][j] << endl;
+                                month_sum += price[m][i][j];
+                            }
+                            else{
+                                cout << m << "月" << i << "日" << "\t\t"
+                                << catagory[m][i][j] << "\t\t" << price[m][i][j] << endl;
+                                month_sum += price[m][i][j];
+                            }
                         }
                     }
                 }
                 cout << "------------------------------------" << endl;
-                cout << m << "月總共花了" << month_sum << "元" << endl;
+                cout << "->" << m << "月總共花了" << month_sum << "元" << endl;
                 cout << endl;
                 break;
                 
@@ -413,15 +457,22 @@ int main(void){
                 cout << endl;
                 cout << " 日期\t\t類別\t\t花費" << endl
                     << "------------------------------------" << endl;
-                for(int i=0; i<50; i++){
+                for(int i=1; i<=50; i++){
                     if(price[m][d][i] != 0){
-                        cout << m << "月" << d << "日" << "\t\t"
-                            << catagory[m][d][i] << "\t\t" << price[m][d][i] << endl;
-                        day_sum += price[m][d][i];
+                        if(m>9){
+                            cout << m << "月" << d << "日" << "\t"
+                                << catagory[m][d][i] << "\t\t" << price[m][d][i] << endl;
+                            day_sum += price[m][d][i];
+                        }
+                        else{
+                            cout << m << "月" << d << "日" << "\t\t"
+                                << catagory[m][d][i] << "\t\t" << price[m][d][i] << endl;
+                            day_sum += price[m][d][i];
+                        }
                     }
                 }
                 cout << "------------------------------------" << endl;
-                cout << m << "月" << d << "日總共花了" << day_sum << "元" << endl; 
+                cout << "->" << m << "月" << d << "日總共花了" << day_sum << "元" << endl; 
                 cout << endl;
                 break;
 
