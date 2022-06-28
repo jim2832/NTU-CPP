@@ -86,7 +86,7 @@ int main(void){
         int m, d, c, p; //month, day, count, price
         int month_sum = 0; //當月總花費
         int day_sum = 0; //當日總花費
-        int total; //總花費
+        int total = 0; //總花費
         int sum1, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9; //各類總和
         double percent1 = 0, percent2 = 0, percent3 = 0,
                 percent4 = 0, percent5 = 0, percent6 = 0,
@@ -282,7 +282,7 @@ int main(void){
                     << "------------------------------------" << endl;
                 for(int i=1; i<=12; i++){
                     for(int j=1; j<=31; j++){
-                        for(int k=1; k<=50; k++){
+                        for(int k=0; k<=50; k++){
                             if(price[i][j][k] != 0){
                                 if(i>9){
                                     cout << i << "月" << j << "日" << "\t"
@@ -302,15 +302,16 @@ int main(void){
 
             //今年的記帳分析
             case '4':
-                cout << "2022年的記帳分析" << endl;
-                cout << "↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓" << endl;
+                cout << "--------------------" << endl;
+                cout << "| 2022年的記帳分析 |" << endl;
+                cout << "--------------------" << endl;
                 cout << endl;
 
                 //每月花費
                 cout << "每月花費:" << endl;
                 cout << endl;
                 cout << "月份" << "\t" << "花費" << endl
-                    << "---------------" << endl;
+                    << "------------" << endl;
                 for(int i=1; i<=12; i++){
                     month_sum = 0;
                     for(int j=1; j<=31; j++){
@@ -321,8 +322,9 @@ int main(void){
                     }
                     cout << i << "月" << "\t" << month_sum << endl;
                 }
-                cout << "---------------" << endl;
+                cout << "------------" << endl;
                 cout << "-> 總花費:" << total << endl;
+                cout << endl;
                 cout << endl;
 
                 //每類型佔比
@@ -427,9 +429,11 @@ int main(void){
                 }
 
                 cout << "各類型消費佔的比例:" << endl;
-                printf("早餐: %d%%\t 中餐: %d%%\t 晚餐: %d%%\n", percent1, percent2, percent3);
-                printf("飲料: %d%%\t 交通: %d%%\t 生活: %d%%\n", percent4, percent5, percent6);
-                printf("娛樂: %d%%\t 教育: %d%%\t 其他: %d%%\n", percent7, percent8, percent9);
+                cout << "---------------------------------------------------------" << endl;
+                printf("|\t早餐: %d%%\t 中餐: %d%%\t 晚餐: %d%%\t|\n", (int)percent1, (int)percent2, (int)percent3);
+                printf("|\t飲料: %d%%\t 交通: %d%%\t 生活: %d%%\t|\n", (int)percent4, (int)percent5, (int)percent6);
+                printf("|\t娛樂: %d%%\t 教育: %d%%\t 其他: %d%%\t|\n", (int)percent7, (int)percent8, (int)percent9);
+                cout << "---------------------------------------------------------" << endl;
                 cout << endl;
 
                 break;
@@ -509,6 +513,7 @@ int main(void){
                     }
                 }
 
+                cout << endl;
                 cout << endl;
                 cout << "2022年" << m << "月" <<  d << "日" << "的記帳紀錄為:" << endl;
                 cout << endl;
