@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <cmath>
 using namespace std;
 
 /*
 記帳程式
-主選單：
 */
 
 class Accounting{
@@ -68,10 +68,9 @@ class Accounting{
 int main(void){
     char input, c_input;
     Accounting account;
-    int zero = 0;
-    string catagory[13][32][50];
-    int price[13][32][50];
-    int count[13][32];
+    string catagory[13][32][50]; //紀錄某月某日某一筆的種類
+    int price[13][32][50]; //紀錄某月某日某一筆的花費
+    int count[13][32]; //紀錄某月某日有幾筆記帳
 
     //初始化
     for(int i=0; i<12; i++){
@@ -323,7 +322,7 @@ int main(void){
                     cout << i << "月" << "\t" << month_sum << endl;
                 }
                 cout << "---------------" << endl;
-                cout << "->總花費:" << total << endl;
+                cout << "-> 總花費:" << total << endl;
                 cout << endl;
 
                 //每類型佔比
@@ -360,6 +359,7 @@ int main(void){
                         }
                     }
                 }
+                //計算比例
                 percent1 = (double)sum1 / total *100;
                 percent2 = (double)sum2 / total *100;
                 percent3 = (double)sum3 / total *100;
@@ -369,10 +369,67 @@ int main(void){
                 percent7 = (double)sum7 / total *100;
                 percent8 = (double)sum8 / total *100;
                 percent9 = (double)sum9 / total *100;
-                cout << "各類型消費佔的比例" << endl;
-                printf("早餐: %d%%\t 中餐: %d%%\t 晚餐: %d%%\n", (int)percent1, (int)percent2, (int)percent3);
-                printf("飲料: %d%%\t 交通: %d%%\t 生活: %d%%\n", (int)percent4, (int)percent5, (int)percent6);
-                printf("娛樂: %d%%\t 教育: %d%%\t 其他: %d%%\n", (int)percent7, (int)percent8, (int)percent9);
+
+                //四捨五入
+                if(percent1 - floor(percent1) >= 0.5){
+                    percent1 = floor(percent1) + 1;
+                }
+                else{
+                    percent1 = floor(percent1);
+                }
+                if(percent2 - floor(percent2) >= 0.5){
+                    percent2 = floor(percent2) + 1;
+                }
+                else{
+                    percent2 = floor(percent2);
+                }
+                if(percent3 - floor(percent3) >= 0.5){
+                    percent3 = floor(percent3) + 1;
+                }
+                else{
+                    percent3 = floor(percent3);
+                }
+                if(percent4 - floor(percent4) >= 0.5){
+                    percent4 = floor(percent4) + 1;
+                }
+                else{
+                    percent4 = floor(percent4);
+                }
+                if(percent5 - floor(percent5) >= 0.5){
+                    percent5 = floor(percent5) + 1;
+                }
+                else{
+                    percent5 = floor(percent5);
+                }
+                if(percent6 - floor(percent6) >= 0.5){
+                    percent6 = floor(percent6) + 1;
+                }
+                else{
+                    percent6 = floor(percent6);
+                }
+                if(percent7 - floor(percent7) >= 0.5){
+                    percent7 = floor(percent7) + 1;
+                }
+                else{
+                    percent7 = floor(percent7);
+                }
+                if(percent8 - floor(percent8) >= 0.5){
+                    percent8 = floor(percent8) + 1;
+                }
+                else{
+                    percent8 = floor(percent8);
+                }
+                if(percent9 - floor(percent9) >= 0.5){
+                    percent9 = floor(percent9) + 1;
+                }
+                else{
+                    percent9 = floor(percent9);
+                }
+
+                cout << "各類型消費佔的比例:" << endl;
+                printf("早餐: %d%%\t 中餐: %d%%\t 晚餐: %d%%\n", percent1, percent2, percent3);
+                printf("飲料: %d%%\t 交通: %d%%\t 生活: %d%%\n", percent4, percent5, percent6);
+                printf("娛樂: %d%%\t 教育: %d%%\t 其他: %d%%\n", percent7, percent8, percent9);
                 cout << endl;
 
                 break;
@@ -408,7 +465,7 @@ int main(void){
                     }
                 }
                 cout << "------------------------------------" << endl;
-                cout << "->" << m << "月總共花了" << month_sum << "元" << endl;
+                cout << "-> " << m << "月總共花了" << month_sum << "元" << endl;
                 cout << endl;
                 break;
                 
@@ -472,7 +529,7 @@ int main(void){
                     }
                 }
                 cout << "------------------------------------" << endl;
-                cout << "->" << m << "月" << d << "日總共花了" << day_sum << "元" << endl; 
+                cout << "-> " << m << "月" << d << "日總共花了" << day_sum << "元" << endl; 
                 cout << endl;
                 break;
 
