@@ -10,8 +10,6 @@ using namespace std;
 
 class Accounting{
     private:
-        int month;
-        int day;
 
     public:
         void start(){
@@ -59,22 +57,6 @@ class Accounting{
                  << "|---------------------------------|" << endl << endl;
         }
 
-        void set_month(int &mo){
-            month = mo;
-        }
-
-        void set_day(int &da){
-            day = da;
-        }
-
-        int getMonth(){
-            return month;
-        }
-
-        int getDay(){
-            return day;
-        }
-
         void show_catagory(){
             cout << "要記什麼類別呢？" << endl
                 << "|-----------------------------------------------|" << endl
@@ -104,8 +86,8 @@ int main(void){
     int count[13][32]; //紀錄某月某日有幾筆記帳
 
     //初始化
-    for(int i=0; i<12; i++){
-        for(int j=0; j<31; j++){
+    for(int i=0; i<=12; i++){
+        for(int j=0; j<=31; j++){
             for(int k=0; k<50; k++){
                 catagory[i][j][k] = "";
                 price[i][j][k] = 0;
@@ -118,7 +100,9 @@ int main(void){
         int month_sum = 0; //當月總花費
         int day_sum = 0; //當日總花費
         int total = 0; //總花費
-        int sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0, sum5 = 0, sum6 = 0, sum7 = 0, sum8 = 0, sum9 = 0; //各類總和
+        int sum1 = 0, sum2 = 0, sum3 = 0,
+            sum4 = 0, sum5 = 0, sum6 = 0,
+            sum7 = 0, sum8 = 0, sum9 = 0; //各類總和
         double percent1 = 0, percent2 = 0, percent3 = 0,
                 percent4 = 0, percent5 = 0, percent6 = 0,
                 percent7 = 0, percent8 = 0, percent9 = 0; //各類佔比
@@ -185,6 +169,10 @@ int main(void){
                     case '1':
                         account.ask_price();
                         cin >> p; //price input
+                        if(p < 1){
+                            cout << "請輸入大於0的數字!" << endl;
+                            break; 
+                        }
 
                         count[m][d]++; //m月d日的記帳數量增加
                         c = count[m][d];
@@ -198,6 +186,10 @@ int main(void){
                     case '2':
                         account.ask_price();
                         cin >> p; //price input
+                        if(p < 1){
+                            cout << "請輸入大於0的數字!" << endl;
+                            break; 
+                        }
 
                         count[m][d]++; //m月d日的記帳數量增加
                         c = count[m][d];
@@ -211,6 +203,10 @@ int main(void){
                     case '3':
                         account.ask_price();
                         cin >> p; //price input
+                        if(p < 1){
+                            cout << "請輸入大於0的數字!" << endl;
+                            break; 
+                        }
 
                         count[m][d]++; //m月d日的記帳數量增加
                         c = count[m][d];
@@ -224,6 +220,10 @@ int main(void){
                     case '4':
                         account.ask_price();
                         cin >> p; //price input
+                        if(p < 1){
+                            cout << "請輸入大於0的數字!" << endl;
+                            break; 
+                        }
 
                         count[m][d]++; //m月d日的記帳數量增加
                         c = count[m][d];
@@ -237,6 +237,10 @@ int main(void){
                     case '5':
                         account.ask_price();
                         cin >> p; //price input
+                        if(p < 1){
+                            cout << "請輸入大於0的數字!" << endl;
+                            break; 
+                        }
 
                         count[m][d]++; //m月d日的記帳數量增加
                         c = count[m][d];
@@ -250,6 +254,10 @@ int main(void){
                     case '6':
                         account.ask_price();
                         cin >> p; //price input
+                        if(p < 1){
+                            cout << "請輸入大於0的數字!" << endl;
+                            break; 
+                        }
 
                         count[m][d]++; //m月d日的記帳數量增加
                         c = count[m][d];
@@ -263,6 +271,10 @@ int main(void){
                     case '7':
                         account.ask_price();
                         cin >> p; //price input
+                        if(p < 1){
+                            cout << "請輸入大於0的數字!" << endl;
+                            break; 
+                        }
 
                         count[m][d]++; //m月d日的記帳數量增加
                         c = count[m][d];
@@ -276,6 +288,10 @@ int main(void){
                     case '8':
                         account.ask_price();
                         cin >> p; //price input
+                        if(p < 1){
+                            cout << "請輸入大於0的數字!" << endl;
+                            break; 
+                        }
 
                         count[m][d]++; //m月d日的記帳數量增加
                         c = count[m][d];
@@ -289,6 +305,10 @@ int main(void){
                     case '9':
                         account.ask_price();
                         cin >> p; //price input
+                        if(p < 1){
+                            cout << "請輸入大於0的數字!" << endl;
+                            break; 
+                        }
 
                         count[m][d]++; //m月d日的記帳數量增加
                         c = count[m][d];
@@ -404,6 +424,19 @@ int main(void){
                 percent7 = (double)sum7 / total *100;
                 percent8 = (double)sum8 / total *100;
                 percent9 = (double)sum9 / total *100;
+
+                //初始數字
+                if(sum1 < 0 && sum2 < 0 && sum3 < 0 && sum4 < 0 && sum5 < 0 && sum6 < 0 && sum7 < 0 && sum8 < 0 && sum9 < 0){
+                    percent1 = 0;
+                    percent2 = 0;
+                    percent3 = 0;
+                    percent4 = 0;
+                    percent5 = 0;
+                    percent6 = 0;
+                    percent7 = 0;
+                    percent8 = 0;
+                    percent9 = 0;
+                }
 
                 //四捨五入
                 if(percent1 - floor(percent1) >= 0.5){
