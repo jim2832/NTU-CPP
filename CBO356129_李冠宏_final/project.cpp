@@ -579,6 +579,7 @@ int main(void){
                     }
                 }
 
+                //查詢某一天的記帳
                 cout << endl;
                 cout << endl;
                 cout << "2022年" << m << "月" <<  d << "日" << "的記帳紀錄為:" << endl;
