@@ -3,12 +3,16 @@
 #include <string.h>
 using namespace std;
 
+struct Data{
+    char name[100];
+    int user_money;
+};
+
 class eCash{
     public:
         //constructor
         eCash(){
             money = 0;
-            ID = "No name";
             read = fopen("Users.txt", "r");
             write = fopen("Users.txt", "w");
         }
@@ -17,45 +21,37 @@ class eCash{
         ~eCash(){}
 
         void login(){
-            char input_ID[100]; //使用者輸入的帳號
-            char read_ID[100]; //從Users.txt要讀入的帳號
-            int read_money; //從Users.txt要讀入的錢
-
+            char input_ID[100];
+            cout << "=== 歡迎使用eCash ===" << endl;
             cout << "eCash: 請輸入您的帳號: ";
             cin >> input_ID;
 
+            read = fopen("Users.txt", "r");
+            write = fopen("Users.txt", "w");
 
-            while(!feof(read)){
-                fscanf(read, "%s\t%d\n", read_ID, &read_money);//讀檔
-                /*
-                如果讀到的帳號和輸入的一樣，就顯示帳號開啟完成
-                並且ID = read_ID; money = read_money
-                */
-                if(strcmp(input_ID, read_ID) == 0){
+            fscanf(read, "%d\n", &user_number);
+            for(int i=1; i<=user_number; i++){
+                fscanf(read, "%s\t%d\n", person[i].name, person[i].user_money);
+                if(strcmp(person[i].name, input_ID) == 0){
                     cout << "eCash: 帳號開啟完成!" << endl;
-                    ID = read_ID;
-                    money = read_money;
-                    break;
+                    strcpy(ID, person[i].name);
+                    money = person[i].user_money;
                 }
-                /*
-                若都沒有讀到一樣的，就顯示帳號不存在，第一次使用
-                並且把input_ID和money = 0寫入Users.txt
-                */
                 else{
-                    cout << "帳號不存在, 第一次使用!" << endl;
-                    fprintf(write, "%s\t%d\n", input_ID, 0);
-                    ID = input_ID;
-                    money = 0;
-                    break;
+                    cout << "eCash: 帳號不存在, 第一次使用!" << endl;
+                    user_number++;
+                    strcmp(person[user_number].name, input_ID);
+                    person[user_number].user_money = 0;
+                    fprintf(write, "%s\t%d\n", person[user_number].name, person[user_number].user_money);
                 }
             }
         }
 
         void logout(){
-
+            cout << "eCash: 帳號登出, 已存檔!" << endl << "謝謝,ByeBye!";
         }
 
-        void store(int m){
+        void store(int &m){
             if(m < 0){
                 cout << "請輸入大於0的金額" << endl;
                 m = 0;
@@ -65,7 +61,7 @@ class eCash{
             cout << "eCash: 您存了" << m << "元" << endl;
         }
 
-        void pay(int m){
+        void pay(int &m){
             if(m < 0){
                 cout << "eCash: 請輸入大於0的金額" << endl;
                 m = 0;
@@ -93,10 +89,12 @@ class eCash{
         }
 
     private:
-        string ID;
+        char ID[100];
         int money;
+        int user_number;
         FILE *read;
         FILE *write;
+        struct Data person[50]; //結構陣列
 };
 
 int main(void){
@@ -150,10 +148,6 @@ int main(void){
             cout << "請輸入有效的指令！" << endl;
             break;
         }
-        //存擋
-        FILE *write;
-        write = fopen("Users.txt", "w");
-
 
         cout << "請按Enter鍵繼續...";
         getchar();
