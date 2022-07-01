@@ -36,7 +36,9 @@ class eCash{
                     cout << "eCash: 帳號開啟完成!" << endl;
                     strcpy(ID, person[i].name);
                     money = person[i].user_money;
+                    break;
                 }
+                /*
                 else{
                     cout << "eCash: 帳號不存在, 第一次使用!" << endl;
                     user_number++;
@@ -44,11 +46,11 @@ class eCash{
                     person[user_number].user_money = 0;
                     fprintf(write, "%s\t%d\n", person[user_number].name, person[user_number].user_money);
                 }
+                */
             }
         }
 
         void logout(){
-            cout << "eCash: 帳號登出, 已存檔!" << endl << "謝謝,ByeBye!";
         }
 
         void store(int &m){
@@ -112,6 +114,7 @@ int main(void){
         cout << "p: 消費" << endl;
         cout << "d: 顯示餘額" << endl;
         cout << "q: 離開" << endl;
+        cout << ">";
 
         cin >> input;
 
