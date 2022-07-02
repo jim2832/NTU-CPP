@@ -38,6 +38,16 @@ class eCash{
                     money = person[i].user_money;
                     break;
                 }
+                if(i == user_number){ //已經掃到最後一個
+                    if(strcmp(person[i].name, input_ID) != 0){
+                        cout << "eCash: 帳號不存在, 第一次使用!" << endl;
+                        user_number++;
+                        strcmp(person[user_number].name, input_ID);
+                        person[user_number].user_money = 0;
+                        fprintf(write, "%s\t%d\n", person[user_number].name, person[user_number].user_money);
+                        break;
+                    }
+                }
                 /*
                 else{
                     cout << "eCash: 帳號不存在, 第一次使用!" << endl;
