@@ -36,10 +36,10 @@ class eCash{
         }
 
         void setID(char input_ID[50]){
-            strcpy(ID, input_ID);
+            ID = input_ID;
         }
 
-        void setMoney(int &m){
+        void setMoney(int m){
             Money = m;
         }
 
@@ -52,7 +52,7 @@ class eCash{
         }
 
     private:
-        char ID[100];
+        string ID;
         int Money;
 };
 
@@ -60,52 +60,48 @@ int main(void){
     char input, account_name[50]; //options and input ID
     int m; //money input
     eCash ecash; //make object
-    struct Data person[50];
+    struct Data person[50]; //結構陣列
     FILE *read;
     FILE *write;
     int number; //帳號數量
+    int flag = 0; //紀錄有無找到已存在帳號
+    int index;
 
     cout << "=== 歡迎使用eCash ===" << endl;
     cout << "eCash: 請輸入您的帳號: ";
     cin >> account_name;
 
-    read = fopen("Users.txt", "r");
-    if(read == NULL){
-            printf("failed to open file!\n");
-            return 0;
-        }
-    write = fopen("Users.txt", "w");
-    if(write == NULL){
-            printf("failed to open file!\n");
-            return 0;
-        }
-
+    read = fopen("data.txt", "r");
+    write = fopen("data.txt", "w");
+    
+    //read the file
     fscanf(read, "%d\n", &number);
-    for(int i=0; i<=number; i++){
+    for(int i=1; i<=number; i++){
         fscanf(read, "%s\t%d\n", person[i].name, &person[i].money);
-        //若有找到已存在帳號，則打開
+    }
+    cout << number << endl << person[1].name << endl;
+    fclose(read);
+
+    //尋找是否有存在帳號
+    for(int i=1; i<=number; i++){
         if(strcmp(person[i].name, account_name) == 0){
-            cout << "eCash: 帳號開啟完成!" << endl;
-            ecash.setID(person[i].name);
-            ecash.setMoney(person[i].money);
+            flag = 1;
+            index = i;
             break;
         }
-        //若搜尋到最後一筆都還沒找到，則新增此新帳號
-        if(i == number){
-            if(strcmp(person[i].name, account_name) != 0){
-                cout << "eCash: 帳號不存在, 第一次使用!" << endl;
-                number++;//帳號數量增加
-                strcmp(person[number].name, account_name);//設定結構裡的資料
-                person[i].money = 0;//設定結構裡的資料
-                fprintf(write, "%s\t%d\n", person[number].name, person[i].money);//寫入檔案中
-                ecash.setID(person[number].name);
-                ecash.setMoney(person[number].money);
-                break;
-            }
-        }
     }
-    fclose(read);
-    fclose(write);
+
+    if(flag == 1){
+        cout << "eCash: 帳號開啟完成!" << endl << endl;
+        ecash.setID(person[index].name);
+        ecash.setMoney(person[index].money);
+    }
+    else{
+        cout << "eCash: 帳號不存在, 第一次使用!" << endl << endl;
+        number++;
+        strcpy(person[number].name, account_name);
+        person[number].money = 0;
+    }
 
     while(1){
         cout << ecash.GetID() << "您好，請選擇項目:" << endl;
@@ -113,7 +109,7 @@ int main(void){
         cout << "p: 消費" << endl;
         cout << "d: 顯示餘額" << endl;
         cout << "q: 離開" << endl;
-        cout << ">" << endl;
+        cout << ">";
 
         cin >> input;
 
